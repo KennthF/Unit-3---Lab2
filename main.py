@@ -2,25 +2,27 @@
 
 import csv
 
-#Search the csv by gender
-def gender_search(gender):
+#Search the csv by Sex
+def gender_search(sex):
     result = []
     with open("data_people.csv", "r") as csv_content:
         data = csv.DictReader(csv_content)
-        for row in data:
-            if gender == "female" and row["Sex"] == "female":
-                result.append(row["Index"], row["First Name"], row["Last Name"])
-            elif gender == "male" and row["Sex"] == "male":
-                result = row["Index"], row["First Name"], row["Last Name"]
+        for column in data:
+            if sex == "female" and column["Sex"] == "Female":
+                result.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+            elif sex == "male" and column["Sex"] == "Male":
+                result.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
     return result
 
 
-print("Use the 'Search' to find data of a person either by First or Last Name, Gender, and Job.")
+print("Use the 'Search' to find data of a person either by First or Last Name, Sex, and Job.")
 user = input("\nSearch:").lower()
 
 content = gender_search(user)
 
-print(content)
+for i in content:
+    print(i)
+
 
 
 
