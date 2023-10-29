@@ -71,6 +71,7 @@ def name_job_search(name_job):
                         counter = 0
     return personal_info, other_info
 
+
 def call_all():
     personal_info = []
     other_info = []
