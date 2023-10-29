@@ -128,15 +128,3 @@ while first_input != "Stop":
             count = count + 1
 
         second_input = input("\nPress Enter to continue:")
-
-        
-        
-
-
-    
-
-
-
-
-
-
