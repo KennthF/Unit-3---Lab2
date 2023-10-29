@@ -14,12 +14,12 @@ def sex_search(sex):
         for column in data:
             #Get all the name in the data by sex 
             if sex == "Female" and column["Sex"] == "Female":
-                personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                personal_info.append(column["First Name"] + " " + column["Last Name"])
                 other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
                             "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
 
             elif sex == "Male" and column["Sex"] == "Male":
-                personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                personal_info.append(column["First Name"] + " " + column["Last Name"])
                 other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
                             "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
     return personal_info, other_info
@@ -64,21 +64,56 @@ def name_job_search(name_job):
 
                     #If everything is the same then it will append to the list
                     if counter == int(len_name): 
-                        personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                        personal_info.append(column["First Name"] + " " + column["Last Name"])
                         other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
                             "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
                         counter = 0
     return personal_info, other_info
 
 
+first_input = ""
+while first_input != "Stop":
+    #Get the user input
+    print("\n" + f"-"*140)
+    print(f"Use the 'Search' to find data of a person either by typing 'First Name' or 'Last Name', 'Sex', and" 
+          + "'Job Title' or 'Stop' to end this prompt.")
+    print(f"-"*140)
+    first_input = input("\nSearch:").title()
 
-print("Use the 'Search' to find data of a person either by typing First or Last Name, Sex, and Job Title.")
-user = input("\nSearch:").title()
+    #Function call
+    content_data = ""
+    other_data = ""
+    if first_input == 'First Name' or first_input == 'Last Name' or first_input == 'Job Title':
+        content_data, other_data = name_job_search(first_input)
+    
+    elif first_input == 'Sex':
+        content_data, other_data = sex_search(first_input)
 
-content, other_content = name_job_search(user)
+    else:
+        if first_input != "Stop": #To stop printing invalid when quiting
+            print("\n\tInvalid Input")
 
-for i in other_content:
-    print(i)
+    #Ask the user if they want to get more information depends on the name of the input
+    second_input = ""
+    while second_input != "Exit" and content_data != [] and content_data != "":
+        for info in content_data:
+            print(f"\n  -->\t{info}")
+
+        print("\nType the full name for other information or 'Exit' to go back to search")
+        second_input = input("Choose Name:").title()
+
+        count = 0
+        for info in content_data:
+            if second_input == info:
+                print(f"\nName: {content_data[count]} --- {other_data[count]}")
+            count =+ 1
+
+        
+        
+
+
+    
+
 
 
 
