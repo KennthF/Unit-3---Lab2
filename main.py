@@ -4,7 +4,8 @@ import csv
 
 #Search the csv by Sex
 def sex_search(sex):
-    result = []
+    personal_info = []
+    other_info = []
 
     #Reads the csv file
     with open("data_people.csv", "r") as csv_content:
@@ -13,50 +14,72 @@ def sex_search(sex):
         for column in data:
             #Get all the name in the data by sex 
             if sex == "Female" and column["Sex"] == "Female":
-                result.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
 
             elif sex == "Male" and column["Sex"] == "Male":
-                result.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
-    return result
+                personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
+    return personal_info, other_info
 
-def name_search(name):
-    result = []
-    search_input = input("Type a letter/s or name:").lower() 
+def name_job_search(name_job):
+    personal_info = []
+    other_info = []
 
     #Reads the csv file
     with open("data_people.csv", "r") as csv_content:
         data = csv.DictReader(csv_content)
-        option_name = ""
+        content_data = ""
+        search_input = ""
 
         for column in data:
-            #See if the chosen option to search is first or last name
-            if name == "First Name":
-                option_name = column["First Name"].lower()
-            elif name == "Last Name":
-                option_name = column["Last Name"].lower()
+            
+            #See if the chosen option to search is first or last name or a job
+            
+            if name_job == "First Name":
+                content_data = column["First Name"].lower()
+                if search_input == "": #To make it happen one time in loop
+                    search_input = input("Type a letter/s or word/s for the First Name:").lower() 
+
+            elif name_job == "Last Name":
+                content_data = column["Last Name"].lower()
+                if search_input == "": #To make it happen one time in loop
+                    search_input = input("Type a letter/s or word/s for the Last Name:").lower()
+
+            elif name_job == "Job Title":
+                content_data = column["Job Title"].lower()
+                if search_input == "": #To make it happen one time in loop
+                    search_input = input("Type a letter/s or word/s for the Job Title:").lower() 
 
             #Find out whos smaller in size between the 2 words
-            len_name = min(len(option_name),len(search_input)) 
+            len_name = min(len(content_data),len(search_input)) 
 
             #Gets the name base on the search
             counter = 0
             for i in range(int(len_name)):
-                if option_name[i] == search_input[i]:
+                if content_data[i] == search_input[i]:
                     counter = counter + 1 #Adds one if each letter is the same
 
                     #If everything is the same then it will append to the list
                     if counter == int(len_name): 
-                        result.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                        personal_info.append(column["Index"] + " " + column["First Name"] + " " + column["Last Name"])
+                        other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
                         counter = 0
-            return result
+    return personal_info, other_info
 
-print("Use the 'Search' to find data of a person either by First or Last Name, Sex, and Job.")
+
+
+print("Use the 'Search' to find data of a person either by typing First or Last Name, Sex, and Job Title.")
 user = input("\nSearch:").title()
 
-content = name_search(user)
+content, other_content = name_job_search(user)
 
-for i in content:
+for i in other_content:
     print(i)
+
 
 
 
