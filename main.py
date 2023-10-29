@@ -3,9 +3,10 @@
 import csv
 
 #Search the csv by Sex
-def sex_search(sex):
+def sex_search():
     personal_info = []
     other_info = []
+    search_input = input("Sex:").title() 
 
     #Reads the csv file
     with open("data_people.csv", "r") as csv_content:
@@ -13,12 +14,12 @@ def sex_search(sex):
 
         for column in data:
             #Get all the name in the data by sex 
-            if sex == "Female" and column["Sex"] == "Female":
+            if search_input == "Female" and column["Sex"] == "Female":
                 personal_info.append(column["First Name"] + " " + column["Last Name"])
                 other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
                             "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
 
-            elif sex == "Male" and column["Sex"] == "Male":
+            elif search_input == "Male" and column["Sex"] == "Male":
                 personal_info.append(column["First Name"] + " " + column["Last Name"])
                 other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
                             "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
@@ -87,7 +88,7 @@ while first_input != "Stop":
         content_data, other_data = name_job_search(first_input)
     
     elif first_input == 'Sex':
-        content_data, other_data = sex_search(first_input)
+        content_data, other_data = sex_search()
 
     else:
         if first_input != "Stop": #To stop printing invalid when quiting
@@ -106,7 +107,9 @@ while first_input != "Stop":
         for info in content_data:
             if second_input == info:
                 print(f"\nName: {content_data[count]} --- {other_data[count]}")
-            count =+ 1
+            count = count + 1
+
+        second_input = input("\nPress Enter to continue:")
 
         
         
