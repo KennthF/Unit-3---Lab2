@@ -71,13 +71,28 @@ def name_job_search(name_job):
                         counter = 0
     return personal_info, other_info
 
+def call_all():
+    personal_info = []
+    other_info = []
+
+    #Reads the csv file
+    with open("data_people.csv", "r") as csv_content:
+        data = csv.DictReader(csv_content)
+
+        #Will add every content here
+        for column in data:
+            personal_info.append(column["First Name"] + " " + column["Last Name"])
+            other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
+    return personal_info, other_info
+
 
 first_input = ""
 while first_input != "Stop":
     #Get the user input
     print("\n" + f"-"*140)
-    print(f"Use the 'Search' to find data of a person either by typing 'First Name' or 'Last Name', 'Sex', and" 
-          + "'Job Title' or 'Stop' to end this prompt.")
+    print(f"Use the 'Search' to find data of a person either by typing 'First Name' or 'Last Name', 'Sex'," 
+          + ",'Job Title' and 'All' to display everything or 'Stop' to end this prompt.")
     print(f"-"*140)
     first_input = input("\nSearch:").title()
 
@@ -90,6 +105,9 @@ while first_input != "Stop":
     elif first_input == 'Sex':
         content_data, other_data = sex_search()
 
+    elif first_input == 'All':
+        content_data, other_data = call_all()
+
     else:
         if first_input != "Stop": #To stop printing invalid when quiting
             print("\n\tInvalid Input")
@@ -97,14 +115,14 @@ while first_input != "Stop":
     #Ask the user if they want to get more information depends on the name of the input
     second_input = ""
     while second_input != "Exit" and content_data != [] and content_data != "":
-        for info in content_data:
+        for info in content_data: #Just print a list of names to choose
             print(f"\n  -->\t{info}")
 
         print("\nType the full name for other information or 'Exit' to go back to search")
         second_input = input("Choose Name:").title()
 
         count = 0
-        for info in content_data:
+        for info in content_data: #Will print the other info and the name
             if second_input == info:
                 print(f"\nName: {content_data[count]} --- {other_data[count]}")
             count = count + 1
