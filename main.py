@@ -91,10 +91,9 @@ def call_all():
 first_input = ""
 while first_input != "Stop":
     #Get the user input
-    print("\n" + f"-"*140)
-    print(f"Use the 'Search' to find data of a person either by typing 'First Name' or 'Last Name', 'Sex'," 
-          + ",'Job Title' and 'All' to display everything or 'Stop' to end this prompt.")
-    print(f"-"*140)
+    print("\n" + f"-"*150)
+    print(f"Use the 'Search' to find data of a person either by typing 'First Name' or 'Last Name','Sex','Job Title' and 'All' to display everything or 'Stop' to end this prompt.")
+    print(f"-"*150)
     first_input = input("\nSearch:").title()
 
     #Function call
