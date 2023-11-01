@@ -31,39 +31,49 @@ def name_job_search(search):
     #Reads the csv file
     with open("data_people.csv", "r") as csv_content:
         data = csv.DictReader(csv_content)
-        content_data = ""
-
+        counter = 0
+        holder = 0
+        
         for column in data:
-            content_data = column["First Name"].lower() #Default Option for Search
-            
             #See if the user wants to change the option for search
-            if search == "First Name":
-                content_data = column["First Name"].lower()
-                search = input("Type a letter/s or word/s for the First Name:").lower() 
+            if search == "Last Name" or holder == 1:
+                if holder == 0: #To avoid looping input
+                    search = input("Type a letter/s or word/s for the Last Name:").title()
+                content_data = column["Last Name"].title()
+                holder = 1
 
-            elif search == "Last Name":
-                content_data = column["Last Name"].lower()
-                search = input("Type a letter/s or word/s for the Last Name:").lower()
-
-            elif search == "Job Title":
-                content_data = column["Job Title"].lower()
-                search = input("Type a letter/s or word/s for the Job Title:").lower() 
+            elif search == "Job Title" or holder == 2:
+                if holder == 0: #To avoid looping input
+                    search = input("Type a letter/s or word/s for the Job Title:").title() 
+                    
+                content_data = column["Job Title"].title()
+                holder = 2
+            
+            else:
+                if holder == 0:
+                    content_data = column["First Name"].title()
 
             #Find out whos smaller in size between the 2 words
             len_search = min(len(content_data),len(search)) 
+            
             #Gets the name base on the search
-            counter = 0
             for i in range(int(len_search)):
                 if content_data[i] == search[i]:
-                    print(counter)
-                    counter = counter + 1 #Adds one if each letter is the same
+                    counter =+ 1 #Adds one if each letter is the same
 
                     #If everything is the same then it will append to the list
                     if counter == int(len_search): 
-                        personal_info.append(column["First Name"] + " " + column["Last Name"])
+                        if holder == 2:
+                            personal_info.append(column["First Name"] + " " + column["Last Name"] + "  Job Title: " 
+                                                 + column["Job Title"].title())
+                        
+                        else:
+                            personal_info.append(column["First Name"] + " " + column["Last Name"])
+
                         other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
-                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"].title())
                         counter = 0
+
     return personal_info, other_info
 
 def call_all():
@@ -78,7 +88,7 @@ def call_all():
         for column in data:
             personal_info.append(column["First Name"] + " " + column["Last Name"])
             other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
-                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"])
+                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"].title)
     return personal_info, other_info
 
 
@@ -113,16 +123,24 @@ while search_input != "Stop":
         ask_detail_input = ""
         exit_continue_input = ""
         while exit_continue_input != "Exit":
-            for info in content_data: #Just print a list of names to choose
-                print(f"\n  -->\t{info}")
+            for names in content_data: #Just print a list of names to choose
+                print(f"\n  -->\t{names}")
 
             print("\nType the full name for other information")
             ask_detail_input = input("Choose Name:").title()
 
             count = 0
-            for info in content_data: #Will print the other info and the name
-                if ask_detail_input == info:
+            for names in content_data: #Will print the other info and the name
+                if ask_detail_input == names:
                     print(f"\nName: {content_data[count]} --- {other_data[count]}")
+                    count = 0
+                    break
                 count = count + 1
+            
+            if count != 0: #If the count did not became 0 it means the input is not match
+                print("\n\tNot Found.")
 
             exit_continue_input = input("\nPress Enter to find more details or 'Exit' to go back to search:").capitalize()
+
+            
+
