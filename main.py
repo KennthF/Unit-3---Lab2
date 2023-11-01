@@ -95,10 +95,10 @@ def call_all():
 search_input = ""
 while search_input != "Stop":
     #Get the user input
-    print("\n" + f"-"*150)
+    print("\n" + f"-"*75)
     print("Use the 'Search' to find a person in the database by either name or sex.")
-    print("Options: by First Name, Last Name, Job Title, All")
-    print(f"-"*150)
+    print("Options by: First Name, Last Name, Job Title, All")
+    print(f"-"*75)
     search_input = input("\nSearch:").title()
 
     #Function call
