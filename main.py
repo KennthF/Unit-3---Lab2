@@ -53,6 +53,10 @@ def name_job_search(search):
                 if holder == 0:
                     content_data = column["First Name"].title()
 
+                if search == "First Name": #To avoid looping input
+                    search = input("Type a letter/s or word/s for the First Name:").title() 
+
+
             #Find out whos smaller in size between the 2 words
             len_search = min(len(content_data),len(search)) 
             
@@ -88,7 +92,7 @@ def call_all():
         for column in data:
             personal_info.append(column["First Name"] + " " + column["Last Name"])
             other_info.append("Sex: " + column["Sex"] + "  Email: " + column["Email"] + 
-                            "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"].title)
+                "  Birthday: " + column["Date of birth"] + "  Job Title: " + column["Job Title"].title())
     return personal_info, other_info
 
 
